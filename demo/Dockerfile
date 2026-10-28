@@ -1,11 +1,13 @@
-FROM eclipse-temurin:17-jdk
-
+# Stage 1: Build the Java application using Maven
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
-
 COPY . .
+RUN ./mvnw clean package -DskipTests
 
-RUN chmod +x mvnw && ./mvnw package -DskipTests
-
+# Stage 2: Run the built JAR package inside a lightweight container
+FROM eclipse-temurin:17-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+ENV PORT=8080
 EXPOSE 8080
-
-CMD ["java", "-jar", "target/demo-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
