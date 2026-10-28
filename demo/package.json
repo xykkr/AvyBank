@@ -1,0 +1,10 @@
+{
+  "name": "avybank-demo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "./mvnw package",
+    "start": "java -jar target/demo-0.0.1-SNAPSHOT.jar",
+    "dev": "./mvnw spring-boot:run"
+  }
+}
