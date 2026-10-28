@@ -1,8 +1,8 @@
 # Stage 1: Build the Java application using Maven
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
-COPY . .
-RUN ./mvnw clean package -DskipTests
+COPY demo/ .
+RUN mvn clean package -DskipTests
 
 # Stage 2: Run the built JAR package inside a lightweight container
 FROM eclipse-temurin:17-jre-alpine
